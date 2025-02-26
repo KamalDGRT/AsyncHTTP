@@ -14,7 +14,7 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "AsyncAPI",
+            name: "swift-async-http",
             targets: ["swift-async-http"]
         )
     ],
