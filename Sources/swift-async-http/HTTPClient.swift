@@ -172,7 +172,7 @@ public extension HTTPClient {
 public extension HTTPClient {
     func post<D: Decodable, E: Encodable>(
         _ endPoint: String,
-        body: E?,
+        body: E? = nil,
         queryItems: [URLQueryParam] = [],
         requestHeaders: [HTTPHeader] = [],
         decoder: JSONDecoder = JSONDecoder()
@@ -190,7 +190,7 @@ public extension HTTPClient {
     func post<E: Encodable>(
         _ endPoint: String,
         queryItems: [URLQueryParam] = [],
-        body: E?,
+        body: E? = nil,
         requestHeaders: [HTTPHeader] = []
     ) async throws -> (Data, URLResponse) {
         let request = try urlRequest(
@@ -209,7 +209,7 @@ public extension HTTPClient {
     func delete<D: Decodable, E: Encodable>(
         _ endPoint: String,
         queryItems: [URLQueryParam] = [],
-        body: E?,
+        body: E? = nil,
         requestHeaders: [HTTPHeader] = [],
         decoder: JSONDecoder = JSONDecoder()
     ) async throws -> D {
@@ -225,7 +225,7 @@ public extension HTTPClient {
     
     func delete<E: Encodable>(
         _ endPoint: String,
-        body: E?,
+        body: E? = nil,
         queryItems: [URLQueryParam] = [],
         requestHeaders: [HTTPHeader] = []
     ) async throws -> (Data, URLResponse) {
