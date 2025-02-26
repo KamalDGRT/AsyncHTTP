@@ -301,3 +301,53 @@ public extension HTTPHeader {
         HTTPHeader(name: "X-XSS-Protection", value: value)
     }
 }
+
+public extension Array where Element == HTTPHeader {
+    /// Checks if the request is `application/x-www-form-urlencoded` by looking at the `Content-Type` header.
+    ///
+    /// - Returns: `true` if `Content-Type` is `application/x-www-form-urlencoded`, otherwise `false`.
+    ///
+    /// Example:
+    /// ```swift
+    /// let headers: [HTTPHeader] = [
+    ///     .contentType("application/x-www-form-urlencoded"),
+    ///     .authorization(bearerToken: "abc123")
+    /// ]
+    /// print(headers.isFormUrlEncoded) // Output: true
+    /// ```
+    var isFormUrlEncoded: Bool {
+        self.contains {
+            $0.name.lowercased() == "content-type" &&
+            $0.value.lowercased() == "application/x-www-form-urlencoded"
+        }
+    }
+    
+    /// Returns a dictionary for an array of `HTTPHeader` objects.
+    var dictionary: [String: String] {
+        reduce(into: [String: String]()) { result, header in
+            result[header.name] = header.value
+        }
+    }
+    
+    /// Merges `defaultHeaders` with `requestHeaders`, ensuring that requestHeaders override default ones.
+    ///
+    /// - Parameter requestHeaders: The headers for a specific API request.
+    /// - Returns: A merged list of `HTTPHeader`, ensuring uniqueness.
+    ///
+    /// Example:
+    /// ```swift
+    /// let defaultHeaders = [HTTPHeader.contentType("application/json")]
+    /// let requestHeaders = [HTTPHeader.contentType("text/plain")]
+    ///
+    /// let mergedHeaders = defaultHeaders.merging(with: requestHeaders)
+    /// print(mergedHeaders) // [Content-Type: text/plain]
+    /// ```
+    func merge(_ requestHeaders: [HTTPHeader]) -> [HTTPHeader] {
+        let mergedDictionary = (self + requestHeaders)
+            .reduce(into: [String: HTTPHeader]()) { result, header in
+                result[header.name.lowercased()] = header
+            }
+        
+        return Array(mergedDictionary.values)
+    }
+}
