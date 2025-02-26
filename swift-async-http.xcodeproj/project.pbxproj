@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		037C08732D6B0E4700AC136A /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037C086F2D6B0E4700AC136A /* HTTPMethod.swift */; };
 		037C08752D6B0E5000AC136A /* swift_async_http.h in Headers */ = {isa = PBXBuildFile; fileRef = 037C08702D6B0E4700AC136A /* swift_async_http.h */; };
+		037C087A2D6EC03E00AC136A /* HTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037C08792D6EC03B00AC136A /* HTTPHeader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,6 +19,7 @@
 		037C08542D6B09E400AC136A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		037C086F2D6B0E4700AC136A /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		037C08702D6B0E4700AC136A /* swift_async_http.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = swift_async_http.h; sourceTree = "<group>"; };
+		037C08792D6EC03B00AC136A /* HTTPHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHeader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 			isa = PBXGroup;
 			children = (
 				037C086F2D6B0E4700AC136A /* HTTPMethod.swift */,
+				037C08792D6EC03B00AC136A /* HTTPHeader.swift */,
 				037C08702D6B0E4700AC136A /* swift_async_http.h */,
 			);
 			path = "swift-async-http";
@@ -158,6 +161,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				037C087A2D6EC03E00AC136A /* HTTPHeader.swift in Sources */,
 				037C08732D6B0E4700AC136A /* HTTPMethod.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
