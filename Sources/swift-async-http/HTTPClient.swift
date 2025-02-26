@@ -14,7 +14,7 @@ public class HTTPClient {
     let session: URLSession
     let defaultHeaders: [HTTPHeader]
     
-    init(
+    public init(
         baseUrl: String,
         defaultHeaders: [HTTPHeader] = [],
         session: URLSession = .shared
@@ -28,7 +28,7 @@ public class HTTPClient {
         self.session = session
     }
     
-    init(
+    public init(
         scheme: String,
         host: String,
         port: Int?,
@@ -44,7 +44,7 @@ public class HTTPClient {
         self.session = session
     }
     
-    func setBaseUrl(_ url: String) {
+    public func setBaseUrl(_ url: String) {
         let components = URLComponents(string: url)
         self.scheme = components?.scheme ?? "https"
         self.host = components?.host  ?? ""
