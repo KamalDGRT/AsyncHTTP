@@ -25,7 +25,7 @@ public struct URLQueryParam {
     /// - Parameters:
     ///   - name: The name of the query parameter.
     ///   - value: The value of the query parameter.
-    init(_ name: String, _ value: String) {
+    public init(_ name: String, _ value: String) {
         self.name = name
         self.value = value
     }
@@ -37,7 +37,7 @@ public struct URLQueryParam {
     /// let param = URLQueryParam("page", "1")
     /// let queryItem = param.queryItem  // URLQueryItem(name: "page", value: "1")
     /// ```
-    var queryItem: URLQueryItem {
+    public var queryItem: URLQueryItem {
         URLQueryItem(name: name, value: value)
     }
 }
