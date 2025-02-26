@@ -8,7 +8,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "swift-async-http",
+    name: "AsyncAPI",
     platforms: [
         .iOS(.v17)
     ],

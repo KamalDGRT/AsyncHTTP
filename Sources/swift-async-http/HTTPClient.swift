@@ -5,7 +5,7 @@
 
 import Foundation
 
-public class HTTPClient {
+open class HTTPClient {
     private var scheme: String
     private var host: String
     private var port: Int?
