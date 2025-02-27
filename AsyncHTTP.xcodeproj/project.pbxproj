@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		037C08732D6B0E4700AC136A /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037C086F2D6B0E4700AC136A /* HTTPMethod.swift */; };
-		037C08752D6B0E5000AC136A /* swift_async_http.h in Headers */ = {isa = PBXBuildFile; fileRef = 037C08702D6B0E4700AC136A /* swift_async_http.h */; };
+		037C08752D6B0E5000AC136A /* AsyncHTTP.h in Headers */ = {isa = PBXBuildFile; fileRef = 037C08702D6B0E4700AC136A /* AsyncHTTP.h */; };
 		037C087A2D6EC03E00AC136A /* HTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037C08792D6EC03B00AC136A /* HTTPHeader.swift */; };
 		037C087C2D6F6B7F00AC136A /* HTTPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037C087B2D6F6B7B00AC136A /* HTTPError.swift */; };
 		037C087F2D6F6BC700AC136A /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037C087E2D6F6BC500AC136A /* Data.swift */; };
@@ -19,12 +19,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		037C083C2D6B08A400AC136A /* swift_async_http.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = swift_async_http.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		037C083C2D6B08A400AC136A /* AsyncHTTP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AsyncHTTP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		037C084D2D6B093200AC136A /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		037C084F2D6B095300AC136A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		037C08542D6B09E400AC136A /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		037C086F2D6B0E4700AC136A /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
-		037C08702D6B0E4700AC136A /* swift_async_http.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = swift_async_http.h; sourceTree = "<group>"; };
+		037C08702D6B0E4700AC136A /* AsyncHTTP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AsyncHTTP.h; sourceTree = "<group>"; };
 		037C08792D6EC03B00AC136A /* HTTPHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHeader.swift; sourceTree = "<group>"; };
 		037C087B2D6F6B7B00AC136A /* HTTPError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPError.swift; sourceTree = "<group>"; };
 		037C087E2D6F6BC500AC136A /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
@@ -60,12 +60,12 @@
 		037C083D2D6B08A400AC136A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				037C083C2D6B08A400AC136A /* swift_async_http.framework */,
+				037C083C2D6B08A400AC136A /* AsyncHTTP.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		037C08712D6B0E4700AC136A /* swift-async-http */ = {
+		037C08712D6B0E4700AC136A /* AsyncHTTP */ = {
 			isa = PBXGroup;
 			children = (
 				037C087D2D6F6BA100AC136A /* Extensions */,
@@ -75,15 +75,15 @@
 				037C08792D6EC03B00AC136A /* HTTPHeader.swift */,
 				037C08882D6F811C00AC136A /* URLQueryParam.swift */,
 				037C08862D6F7DAB00AC136A /* HTTPClient.swift */,
-				037C08702D6B0E4700AC136A /* swift_async_http.h */,
+				037C08702D6B0E4700AC136A /* AsyncHTTP.h */,
 			);
-			path = "swift-async-http";
+			path = AsyncHTTP;
 			sourceTree = "<group>";
 		};
 		037C08722D6B0E4700AC136A /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				037C08712D6B0E4700AC136A /* swift-async-http */,
+				037C08712D6B0E4700AC136A /* AsyncHTTP */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -111,16 +111,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				037C08752D6B0E5000AC136A /* swift_async_http.h in Headers */,
+				037C08752D6B0E5000AC136A /* AsyncHTTP.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		037C083B2D6B08A400AC136A /* swift-async-http */ = {
+		037C083B2D6B08A400AC136A /* AsyncHTTP */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 037C08422D6B08A400AC136A /* Build configuration list for PBXNativeTarget "swift-async-http" */;
+			buildConfigurationList = 037C08422D6B08A400AC136A /* Build configuration list for PBXNativeTarget "AsyncHTTP" */;
 			buildPhases = (
 				037C08372D6B08A400AC136A /* Headers */,
 				037C08382D6B08A400AC136A /* Sources */,
@@ -131,11 +131,11 @@
 			);
 			dependencies = (
 			);
-			name = "swift-async-http";
+			name = AsyncHTTP;
 			packageProductDependencies = (
 			);
-			productName = "swift-async-http";
-			productReference = 037C083C2D6B08A400AC136A /* swift_async_http.framework */;
+			productName = "AsyncHTTP";
+			productReference = 037C083C2D6B08A400AC136A /* AsyncHTTP.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -153,7 +153,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 037C08362D6B08A300AC136A /* Build configuration list for PBXProject "swift-async-http" */;
+			buildConfigurationList = 037C08362D6B08A300AC136A /* Build configuration list for PBXProject "AsyncHTTP" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -167,7 +167,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				037C083B2D6B08A400AC136A /* swift-async-http */,
+				037C083B2D6B08A400AC136A /* AsyncHTTP */,
 			);
 		};
 /* End PBXProject section */
@@ -226,7 +226,7 @@
 				MARKETING_VERSION = 1.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.kamaldgrt.swift-async-http";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kamaldgrt.AsyncHTTP;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -266,7 +266,7 @@
 				MARKETING_VERSION = 1.0;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.kamaldgrt.swift-async-http";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kamaldgrt.AsyncHTTP;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -408,7 +408,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		037C08362D6B08A300AC136A /* Build configuration list for PBXProject "swift-async-http" */ = {
+		037C08362D6B08A300AC136A /* Build configuration list for PBXProject "AsyncHTTP" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				037C08452D6B08A400AC136A /* Debug */,
@@ -417,7 +417,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		037C08422D6B08A400AC136A /* Build configuration list for PBXNativeTarget "swift-async-http" */ = {
+		037C08422D6B08A400AC136A /* Build configuration list for PBXNativeTarget "AsyncHTTP" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				037C08432D6B08A400AC136A /* Debug */,

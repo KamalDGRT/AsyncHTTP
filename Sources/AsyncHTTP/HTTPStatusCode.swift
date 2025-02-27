@@ -1,6 +1,6 @@
 //
 // HTTPStatusCode.swift
-// swift-async-http
+// AsyncHTTP
 //
 
 public enum HTTPStatusCode: Int, Codable {

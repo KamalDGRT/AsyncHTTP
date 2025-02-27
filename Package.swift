@@ -8,20 +8,20 @@
 import PackageDescription
 
 let package = Package(
-    name: "AsyncAPI",
+    name: "AsyncHTTP",
     platforms: [
         .iOS(.v17)
     ],
     products: [
         .library(
-            name: "swift-async-http",
-            targets: ["swift-async-http"]
+            name: "AsyncHTTP",
+            targets: ["AsyncHTTP"]
         )
     ],
     targets: [
         .target(
-            name: "swift-async-http",
-            path: "Sources/swift-async-http" // Source files directory
+            name: "AsyncHTTP",
+            path: "Sources/AsyncHTTP" // Source files directory
         )
     ]   
 )

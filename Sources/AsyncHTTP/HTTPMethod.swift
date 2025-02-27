@@ -1,6 +1,6 @@
 //
 //  HTTPMethod.swift
-//  swift-async-http
+//  AsyncHTTP
 //
 
 /// An enumeration with the possible HTTP Request Methods.

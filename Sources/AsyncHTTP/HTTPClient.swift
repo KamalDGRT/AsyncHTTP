@@ -1,6 +1,6 @@
 //
 // HTTPClient.swift
-// swift-async-http
+// AsyncHTTP
 //
 
 import Foundation
