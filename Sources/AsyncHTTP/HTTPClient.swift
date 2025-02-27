@@ -74,15 +74,13 @@ private extension HTTPClient {
     func decodeResponse<D: Decodable, E: Encodable>(
         for path: String,
         method: HTTPMethod,
-        queryItems: [URLQueryParam] = [],
-        body: E? = nil,
+        body: E,
         requestHeaders: [HTTPHeader],
         decoder: JSONDecoder = JSONDecoder()
     ) async throws -> D {
         let request = try urlRequest(
             for: path,
             method: method,
-            queryItems: queryItems,
             body: body,
             requestHeaders: requestHeaders
         )
@@ -91,21 +89,20 @@ private extension HTTPClient {
     }
 }
 
-
 // MARK: Preparing URLRequest
 public extension HTTPClient {
-    /// Used only in GET calls.
     func urlRequest(
         for endPoint: String,
+        method: HTTPMethod = .GET,
         queryItems: [URLQueryParam]? = nil,
         requestHeaders: [HTTPHeader] = []
     ) throws -> URLRequest {
+        var request = URLRequest(url: try url(for: endPoint, queryItems: queryItems))
         let allHeaders = defaultHeaders.merge(requestHeaders)
-        var request = URLRequest(
-            url: try url(for: endPoint, queryItems: queryItems),
-            cachePolicy: .useProtocolCachePolicy,
-            timeoutInterval: 60
-        )
+        if method != .GET && allHeaders.isFormUrlEncoded {
+            request.httpBody = queryItems?.urlEncodedString.data(using: .utf8)
+        }
+        request.httpMethod = method.rawValue
         request.allHTTPHeaderFields = allHeaders.dictionary
         return request
     }
@@ -113,27 +110,53 @@ public extension HTTPClient {
     func urlRequest<E: Encodable>(
         for endPoint: String,
         method: HTTPMethod = .POST,
-        queryItems: [URLQueryParam]? = nil,
         body: E? = nil,
         requestHeaders: [HTTPHeader] = []
     ) throws -> URLRequest {
-        let allHeaders = defaultHeaders.merge(requestHeaders)
-        
-        var request = URLRequest(
-            url: try url(for: endPoint, queryItems: queryItems),
-            cachePolicy: .useProtocolCachePolicy,
-            timeoutInterval: 60
-        )
+        var request = URLRequest(url: try url(for: endPoint))
         request.httpMethod = method.rawValue
-        
-        if allHeaders.isFormUrlEncoded {
-            request.httpBody = queryItems?.urlEncodedString.data(using: .utf8)
-        } else {
-            request.httpBody = try JSONEncoder().encode(body)
-        }
-        
-        request.allHTTPHeaderFields = allHeaders.dictionary
+        request.httpBody = try JSONEncoder().encode(body)
+        request.allHTTPHeaderFields = defaultHeaders.merge(requestHeaders).dictionary
         return request
+    }
+}
+
+// MARK: Form Data
+public extension HTTPClient {
+    func form<D: Decodable>(
+        _ endPoint: String,
+        method: HTTPMethod = .POST,
+        queryItems: [URLQueryParam] = [],
+        requestHeaders: [HTTPHeader] = [
+            .contentType("application/x-www-form-urlencoded")
+        ],
+        decoder: JSONDecoder = JSONDecoder()
+    ) async throws -> D {
+        let request = try urlRequest(
+            for: endPoint,
+            method: method,
+            queryItems: queryItems,
+            requestHeaders: requestHeaders
+        )
+        let (data, _) = try await session.data(for: request)
+        return try decoder.decode(D.self, from: data)
+    }
+    
+    func form(
+        _ endPoint: String,
+        method: HTTPMethod = .POST,
+        queryItems: [URLQueryParam] = [],
+        requestHeaders: [HTTPHeader] = [
+            .contentType("application/x-www-form-urlencoded")
+        ]
+    ) async throws -> (Data, URLResponse) {
+        let request = try urlRequest(
+            for: endPoint,
+            method: method,
+            queryItems: queryItems,
+            requestHeaders: requestHeaders
+        )
+        return try await session.data(for: request)
     }
 }
 
@@ -156,7 +179,7 @@ public extension HTTPClient {
     
     func get(
         _ endPoint: String,
-        queryItems: [URLQueryParam]? = nil,
+        queryItems: [URLQueryParam] = [],
         requestHeaders: [HTTPHeader] = []
     ) async throws -> (Data, URLResponse) {
         let request = try urlRequest(
@@ -172,15 +195,13 @@ public extension HTTPClient {
 public extension HTTPClient {
     func post<D: Decodable, E: Encodable>(
         _ endPoint: String,
-        body: E? = nil,
-        queryItems: [URLQueryParam] = [],
+        body: E,
         requestHeaders: [HTTPHeader] = [],
         decoder: JSONDecoder = JSONDecoder()
     ) async throws -> D {
         return try await decodeResponse(
             for: endPoint,
             method: .POST,
-            queryItems: queryItems,
             body: body,
             requestHeaders: requestHeaders,
             decoder: decoder
@@ -189,14 +210,12 @@ public extension HTTPClient {
     
     func post<E: Encodable>(
         _ endPoint: String,
-        queryItems: [URLQueryParam] = [],
-        body: E? = nil,
+        body: E,
         requestHeaders: [HTTPHeader] = []
     ) async throws -> (Data, URLResponse) {
         let request = try urlRequest(
             for: endPoint,
             method: .POST,
-            queryItems: queryItems,
             body: body,
             requestHeaders: requestHeaders
         )
@@ -207,32 +226,124 @@ public extension HTTPClient {
 // MARK: DELETE
 public extension HTTPClient {
     func delete<D: Decodable, E: Encodable>(
-        _ endPoint: String,
-        queryItems: [URLQueryParam] = [],
-        body: E? = nil,
-        requestHeaders: [HTTPHeader] = [],
+        _ path: String,
+        body: E,
+        headers: [HTTPHeader] = [],
         decoder: JSONDecoder = JSONDecoder()
     ) async throws -> D {
         return try await decodeResponse(
-            for: endPoint,
+            for: path,
             method: .DELETE,
-            queryItems: queryItems,
             body: body,
-            requestHeaders: requestHeaders,
+            requestHeaders: headers,
             decoder: decoder
         )
     }
     
     func delete<E: Encodable>(
         _ endPoint: String,
-        body: E? = nil,
-        queryItems: [URLQueryParam] = [],
+        body: E,
         requestHeaders: [HTTPHeader] = []
     ) async throws -> (Data, URLResponse) {
         let request = try urlRequest(
             for: endPoint,
             method: .DELETE,
-            queryItems: queryItems,
+            body: body,
+            requestHeaders: requestHeaders
+        )
+        return try await session.data(for: request)
+    }
+}
+
+// MARK: PUT
+public extension HTTPClient {
+    func put<D: Decodable, E: Encodable>(
+        _ path: String,
+        body: E,
+        headers: [HTTPHeader] = [],
+        decoder: JSONDecoder = JSONDecoder()
+    ) async throws -> D {
+        return try await decodeResponse(
+            for: path,
+            method: .PUT,
+            body: body,
+            requestHeaders: headers,
+            decoder: decoder
+        )
+    }
+    
+    func put<E: Encodable>(
+        _ endPoint: String,
+        body: E,
+        requestHeaders: [HTTPHeader] = []
+    ) async throws -> (Data, URLResponse) {
+        let request = try urlRequest(
+            for: endPoint,
+            method: .PUT,
+            body: body,
+            requestHeaders: requestHeaders
+        )
+        return try await session.data(for: request)
+    }
+}
+
+// MARK: UPDATE
+public extension HTTPClient {
+    func update<D: Decodable, E: Encodable>(
+        _ path: String,
+        body: E,
+        headers: [HTTPHeader] = [],
+        decoder: JSONDecoder = JSONDecoder()
+    ) async throws -> D {
+        return try await decodeResponse(
+            for: path,
+            method: .UPDATE,
+            body: body,
+            requestHeaders: headers,
+            decoder: decoder
+        )
+    }
+    
+    func update<E: Encodable>(
+        _ endPoint: String,
+        body: E,
+        requestHeaders: [HTTPHeader] = []
+    ) async throws -> (Data, URLResponse) {
+        let request = try urlRequest(
+            for: endPoint,
+            method: .UPDATE,
+            body: body,
+            requestHeaders: requestHeaders
+        )
+        return try await session.data(for: request)
+    }
+}
+
+// MARK: PATCH
+public extension HTTPClient {
+    func patch<D: Decodable, E: Encodable>(
+        _ path: String,
+        body: E,
+        headers: [HTTPHeader] = [],
+        decoder: JSONDecoder = JSONDecoder()
+    ) async throws -> D {
+        return try await decodeResponse(
+            for: path,
+            method: .PATCH,
+            body: body,
+            requestHeaders: headers,
+            decoder: decoder
+        )
+    }
+    
+    func patch<E: Encodable>(
+        _ endPoint: String,
+        body: E,
+        requestHeaders: [HTTPHeader] = []
+    ) async throws -> (Data, URLResponse) {
+        let request = try urlRequest(
+            for: endPoint,
+            method: .PATCH,
             body: body,
             requestHeaders: requestHeaders
         )
