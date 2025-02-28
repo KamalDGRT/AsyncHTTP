@@ -71,7 +71,7 @@ private extension HTTPClient {
         return url
     }
     
-    func decodeResponse<D: Decodable, E: Encodable>(
+    func getDecodedResponse<D: Decodable, E: Encodable>(
         for path: String,
         method: HTTPMethod,
         body: E,
@@ -199,7 +199,7 @@ public extension HTTPClient {
         requestHeaders: [HTTPHeader] = [],
         decoder: JSONDecoder = JSONDecoder()
     ) async throws -> D {
-        return try await decodeResponse(
+        return try await getDecodedResponse(
             for: endPoint,
             method: .POST,
             body: body,
@@ -231,7 +231,7 @@ public extension HTTPClient {
         headers: [HTTPHeader] = [],
         decoder: JSONDecoder = JSONDecoder()
     ) async throws -> D {
-        return try await decodeResponse(
+        return try await getDecodedResponse(
             for: path,
             method: .DELETE,
             body: body,
@@ -263,7 +263,7 @@ public extension HTTPClient {
         headers: [HTTPHeader] = [],
         decoder: JSONDecoder = JSONDecoder()
     ) async throws -> D {
-        return try await decodeResponse(
+        return try await getDecodedResponse(
             for: path,
             method: .PUT,
             body: body,
@@ -295,7 +295,7 @@ public extension HTTPClient {
         headers: [HTTPHeader] = [],
         decoder: JSONDecoder = JSONDecoder()
     ) async throws -> D {
-        return try await decodeResponse(
+        return try await getDecodedResponse(
             for: path,
             method: .UPDATE,
             body: body,
@@ -327,7 +327,7 @@ public extension HTTPClient {
         headers: [HTTPHeader] = [],
         decoder: JSONDecoder = JSONDecoder()
     ) async throws -> D {
-        return try await decodeResponse(
+        return try await getDecodedResponse(
             for: path,
             method: .PATCH,
             body: body,
