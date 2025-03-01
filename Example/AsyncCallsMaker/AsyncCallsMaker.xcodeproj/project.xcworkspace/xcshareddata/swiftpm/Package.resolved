@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/KamalDGRT/AsyncHTTP",
       "state" : {
-        "branch" : "main",
-        "revision" : "e3d537c0785919c38cd487c69d7487c77ac237d0"
+        "revision" : "847a890a2eeb1316cdc940998411be9c786a387b",
+        "version" : "1.0.0"
       }
     }
   ],

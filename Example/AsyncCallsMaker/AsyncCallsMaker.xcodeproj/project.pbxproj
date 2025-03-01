@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		035FC5462D72CA25000C19EF /* AsyncHTTP in Frameworks */ = {isa = PBXBuildFile; productRef = 035FC5452D72CA25000C19EF /* AsyncHTTP */; };
+		035FC58B2D73AE88000C19EF /* AsyncHTTP in Frameworks */ = {isa = PBXBuildFile; productRef = 035FC58A2D73AE88000C19EF /* AsyncHTTP */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				035FC5462D72CA25000C19EF /* AsyncHTTP in Frameworks */,
+				035FC58B2D73AE88000C19EF /* AsyncHTTP in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,7 +70,7 @@
 			);
 			name = AsyncCallsMaker;
 			packageProductDependencies = (
-				035FC5452D72CA25000C19EF /* AsyncHTTP */,
+				035FC58A2D73AE88000C19EF /* AsyncHTTP */,
 			);
 			productName = AsyncCallsMaker;
 			productReference = 037C08B02D722C2100AC136A /* AsyncCallsMaker.app */;
@@ -101,7 +101,7 @@
 			mainGroup = 037C08A72D722C2100AC136A;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				035FC5442D72CA25000C19EF /* XCRemoteSwiftPackageReference "AsyncHTTP" */,
+				035FC5892D73AE88000C19EF /* XCRemoteSwiftPackageReference "AsyncHTTP" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 037C08B12D722C2100AC136A /* Products */;
@@ -335,20 +335,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		035FC5442D72CA25000C19EF /* XCRemoteSwiftPackageReference "AsyncHTTP" */ = {
+		035FC5892D73AE88000C19EF /* XCRemoteSwiftPackageReference "AsyncHTTP" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/KamalDGRT/AsyncHTTP";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		035FC5452D72CA25000C19EF /* AsyncHTTP */ = {
+		035FC58A2D73AE88000C19EF /* AsyncHTTP */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 035FC5442D72CA25000C19EF /* XCRemoteSwiftPackageReference "AsyncHTTP" */;
+			package = 035FC5892D73AE88000C19EF /* XCRemoteSwiftPackageReference "AsyncHTTP" */;
 			productName = AsyncHTTP;
 		};
 /* End XCSwiftPackageProductDependency section */
