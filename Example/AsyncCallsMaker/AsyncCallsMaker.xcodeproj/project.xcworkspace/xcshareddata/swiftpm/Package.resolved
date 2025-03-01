@@ -1,0 +1,15 @@
+{
+  "originHash" : "97196e27ebccb967d732c991849825846cf99d6521802e0c9cf7c090e0a009a0",
+  "pins" : [
+    {
+      "identity" : "asynchttp",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/KamalDGRT/AsyncHTTP",
+      "state" : {
+        "branch" : "main",
+        "revision" : "f9fbc33b7b2e247b4826e9082892069a974a47cf"
+      }
+    }
+  ],
+  "version" : 3
+}
