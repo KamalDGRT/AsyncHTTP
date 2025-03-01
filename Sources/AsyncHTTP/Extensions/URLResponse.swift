@@ -20,4 +20,12 @@ public extension URLResponse {
     var isSuccessResponse: Bool {
         statusCode.rawValue >= 200 && statusCode.rawValue < 300
     }
+    
+    var isRedirectionResponse: Bool {
+        statusCode.rawValue >= 300 && statusCode.rawValue < 400
+    }
+    
+    var isInternalServerError: Bool {
+        statusCode == .internalServerError
+    }
 }
