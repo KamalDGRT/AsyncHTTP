@@ -57,6 +57,7 @@ open class HTTPClient {
     }
 }
 
+// MARK: Helpers
 private extension HTTPClient {
     func url(
         for endPoint: String,
@@ -88,8 +89,25 @@ private extension HTTPClient {
             body: body,
             requestHeaders: requestHeaders
         )
-        let (data, _) = try await session.data(for: request)
-        return try decoder.decode(D.self, from: data)
+        let (data, _) = try await performRequest(request)
+        return try decodeData(data, using: decoder)
+    }
+    
+    func validateResponse(_ data: Data, _ response: URLResponse) throws {
+        guard let httpURLResponse = response as? HTTPURLResponse
+        else { throw HTTPError.invalidResponse }
+        
+        if httpURLResponse.isInternalServerError {
+            throw HTTPError.internalServerError
+        }
+        
+        guard httpURLResponse.isSuccessResponse
+        else {
+            throw HTTPError.serverErrorWithData(
+                data: data,
+                statusCode: response.statusCode
+            )
+        }
     }
 }
 
@@ -119,9 +137,34 @@ public extension HTTPClient {
     ) throws -> URLRequest {
         var request = URLRequest(url: try url(for: endPoint))
         request.httpMethod = method.rawValue
-        request.httpBody = try JSONEncoder().encode(body)
+        
+        do {
+            request.httpBody = try JSONEncoder().encode(body)
+        } catch {
+            throw HTTPError.badRequestBody
+        }
+        
         request.allHTTPHeaderFields = defaultHeaders.merge(requestHeaders).dictionary
         return request
+    }
+    
+    func performRequest(
+        _ request: URLRequest
+    ) async throws -> (Data, URLResponse) {
+        let (data, response) = try await session.data(for: request)
+        try validateResponse(data, response)
+        return (data, response)
+    }
+    
+    func decodeData<D: Decodable>(
+        _ data: Data,
+        using decoder: JSONDecoder = JSONDecoder()
+    ) throws -> D {
+        do {
+            return try decoder.decode(D.self, from: data)
+        } catch {
+            throw HTTPError.decoding
+        }
     }
 }
 
@@ -142,8 +185,8 @@ public extension HTTPClient {
             queryItems: queryItems,
             requestHeaders: requestHeaders
         )
-        let (data, _) = try await session.data(for: request)
-        return try decoder.decode(D.self, from: data)
+        let (data, _) = try await performRequest(request)
+        return try decodeData(data, using: decoder)
     }
     
     func form(
@@ -160,7 +203,7 @@ public extension HTTPClient {
             queryItems: queryItems,
             requestHeaders: requestHeaders
         )
-        return try await session.data(for: request)
+        return try await performRequest(request)
     }
 }
 
@@ -177,8 +220,8 @@ public extension HTTPClient {
             queryItems: queryItems,
             requestHeaders: requestHeaders
         )
-        let (data, _) = try await session.data(for: request)
-        return try decoder.decode(D.self, from: data)
+        let (data, _) = try await performRequest(request)
+        return try decodeData(data)
     }
     
     func get(
@@ -191,7 +234,7 @@ public extension HTTPClient {
             queryItems: queryItems,
             requestHeaders: requestHeaders
         )
-        return try await session.data(for: request)
+        return try await performRequest(request)
     }
 }
 
@@ -223,7 +266,7 @@ public extension HTTPClient {
             body: body,
             requestHeaders: requestHeaders
         )
-        return try await session.data(for: request)
+        return try await performRequest(request)
     }
 }
 
@@ -255,7 +298,7 @@ public extension HTTPClient {
             body: body,
             requestHeaders: requestHeaders
         )
-        return try await session.data(for: request)
+        return try await performRequest(request)
     }
 }
 
@@ -287,7 +330,7 @@ public extension HTTPClient {
             body: body,
             requestHeaders: requestHeaders
         )
-        return try await session.data(for: request)
+        return try await performRequest(request)
     }
 }
 
@@ -319,7 +362,7 @@ public extension HTTPClient {
             body: body,
             requestHeaders: requestHeaders
         )
-        return try await session.data(for: request)
+        return try await performRequest(request)
     }
 }
 
@@ -351,6 +394,6 @@ public extension HTTPClient {
             body: body,
             requestHeaders: requestHeaders
         )
-        return try await session.data(for: request)
+        return try await performRequest(request)
     }
 }
