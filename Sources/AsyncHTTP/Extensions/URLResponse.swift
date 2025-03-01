@@ -16,4 +16,8 @@ public extension URLResponse {
             return .badRequest
         }
     }
+    
+    var isSuccessResponse: Bool {
+        statusCode.rawValue >= 200 && statusCode.rawValue < 300
+    }
 }

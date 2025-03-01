@@ -134,7 +134,7 @@
 			name = AsyncHTTP;
 			packageProductDependencies = (
 			);
-			productName = "AsyncHTTP";
+			productName = AsyncHTTP;
 			productReference = 037C083C2D6B08A400AC136A /* AsyncHTTP.framework */;
 			productType = "com.apple.product-type.framework";
 		};
