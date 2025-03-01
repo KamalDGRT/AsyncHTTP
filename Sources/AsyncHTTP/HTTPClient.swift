@@ -28,6 +28,10 @@ open class HTTPClient {
         self.session = session
     }
     
+    public var domain: String {
+        return host
+    }
+    
     public init(
         scheme: String,
         host: String,
