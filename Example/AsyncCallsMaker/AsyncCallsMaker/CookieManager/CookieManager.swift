@@ -71,26 +71,21 @@ final class CookieManager {
             return
         }
         
+        /// Removing existing cookies matching the `domain` and `name`
         for cookie in cookies {
-            let descriptor = FetchDescriptor<CookieData>(
-                predicate: #Predicate { $0.name == cookie.name && $0.domain == domain }
-            )
-            
-            do {
-                if let existingCookie = try context.fetch(descriptor).first {
-                    // Update existing cookie
-                    existingCookie.value = cookie.value
-                    existingCookie.path = cookie.path
-                    existingCookie.expires = cookie.expiresDate
-                } else {
-                    context.insert(cookie.cookieData)
-                }
-                
-                try context.save()
-            } catch {
-                print("Failed to save cookies: \(error)")
-            }
+            deleteCookies(for: domain, name: cookie.name)
         }
+        
+        /// Inserting the new values for the cookies
+        do {
+            for cookie in cookies {
+                context.insert(cookie.cookieData)
+            }
+            try context.save()
+        } catch {
+            print("Failed to save cookies for domain \(domain): \(error)")
+        }
+       
     }
     
     func deleteCookies(for domain: String) {
@@ -102,6 +97,29 @@ final class CookieManager {
         
         let descriptor = FetchDescriptor<CookieData>(
             predicate: #Predicate { $0.domain == domain }
+        )
+        do {
+            let cookiesToDelete = try context.fetch(descriptor)
+            
+            for cookie in cookiesToDelete {
+                context.delete(cookie)
+            }
+            
+            try context.save()
+        } catch {
+            print("Failed to delete cookies for domain \(domain): \(error)")
+        }
+    }
+    
+    func deleteCookies(for domain: String, name: String) {
+        guard let context
+        else {
+            print("DELETE: Failed to get context")
+            return
+        }
+        
+        let descriptor = FetchDescriptor<CookieData>(
+            predicate: #Predicate { $0.domain == domain && $0.name == name }
         )
         do {
             let cookiesToDelete = try context.fetch(descriptor)
