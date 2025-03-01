@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftData
+import AsyncHTTP
 
 final class CookieManager {
     static let shared = CookieManager()
@@ -53,6 +54,13 @@ final class CookieManager {
             print("Failed to fetch cookies: \(error)")
             return []
         }
+    }
+    
+    /// Retrieves all cookies stored for a specific domain as a list of `HTTPHeader`
+    func getCookieHeaders(for domain: String) -> [HTTPHeader] {
+        let savedCookies = getCookies(for: domain)
+        let headerFields = HTTPCookie.requestHeaderFields(with: savedCookies)
+        return headerFields.map { HTTPHeader(name: $0.key, value: $0.value) }
     }
     
     /// Saves an array of cookies for a specific domain
