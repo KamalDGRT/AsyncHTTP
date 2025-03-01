@@ -11,7 +11,7 @@ import SwiftUI
 struct AsyncCallsMakerApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(viewModel: ContentViewModel())
         }
     }
 }
